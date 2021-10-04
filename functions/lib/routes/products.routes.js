@@ -5,6 +5,7 @@ const admin = require("firebase-admin"); /* requerimos de firebase admin */
 const router = Router();
 /* registramos nuestra api con los datos de la bd de firebase */
 const db = admin.firestore();
+/* insertar */
 router.post('/api/products', async (req, res) => {
     try {
         await db.collection('productos')
@@ -17,6 +18,7 @@ router.post('/api/products', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+/* obtener por parametro */
 router.get('/api/products/:products_id', async (req, res) => {
     try {
         const doc = db.collection('productos').doc(req.params.products_id);
@@ -28,6 +30,7 @@ router.get('/api/products/:products_id', async (req, res) => {
         return res.status(500).send(error);
     }
 });
+/* obtener todo */
 router.get('/api/products', async (req, res) => {
     try {
         const query = db.collection('productos');
@@ -44,6 +47,7 @@ router.get('/api/products', async (req, res) => {
         return res.status(500).json();
     }
 });
+/* eliminar */
 router.delete('/api/products/:products_id', async (req, res) => {
     try {
         const documents = db.collection('productos').doc(req.params.products_id);
@@ -54,6 +58,7 @@ router.delete('/api/products/:products_id', async (req, res) => {
         return res.status(500).json();
     }
 });
+/* actualizar */
 router.put('/api/products/:products_id', async (req, res) => {
     try {
         const documents = db.collection('productos').doc(req.params.products_id);
