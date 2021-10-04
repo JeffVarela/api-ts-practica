@@ -11,6 +11,7 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
+/*  */
 app.get('/hello-world', (req, res) => {
   return res.status(200).json({message: 'hello world'})
 })
@@ -61,6 +62,28 @@ app.get ('/api/products', async (req, res) =>{
   }
 })
 
+app.delete('/api/products/:products_id', async (req, res)=>{
+ try {
+  const documents = db.collection('productos').doc(req.params.products_id);
+  await documents.delete();
+  return res.status(200).json();
+
+ } catch (error) {
+  return res.status(500).json(); 
+ }
+})
+
+app.put('/api/products/:products_id', async (req, res)=>{
+  try {
+    const documents = db.collection('productos').doc(req.params.products_id);
+  await documents.update({
+    name: req.body.name
+  });
+  return res.status(200).json();
+  } catch (error) {
+  return res.status(500).json(); 
+  }
+})
 
 exports.app = functions.https.onRequest(app)
 
